@@ -1,0 +1,12 @@
+name: issue handler
+on:
+    issues:
+        types: [opened, edited]
+
+jobs:
+    log_details:
+        runs-on: ubuntu-latest
+        steps:
+         - name: display github context
+           run: echo "${{ toJson(github) }}"   
+    
