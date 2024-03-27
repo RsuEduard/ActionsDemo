@@ -1,0 +1,45 @@
+name: test and lint
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: run tests
+        run: npm run test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: run lint
+        run: npm run lint
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: run build
+        run: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: echo "Deploying..."
